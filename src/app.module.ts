@@ -7,6 +7,7 @@ import { join } from 'path';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { ItemsModule } from './items/items.module';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [ 
@@ -32,6 +33,7 @@ import { UsersModule } from './users/users.module';
     }),
     ItemsModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [ ],
   providers: [ ],

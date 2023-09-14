@@ -17,6 +17,11 @@ type User {
   isActive: Boolean!
 }
 
+type AuthResponse {
+  token: String!
+  user: User!
+}
+
 type Query {
   items: [Item!]!
   item(
@@ -35,6 +40,7 @@ type Mutation {
     id: ID!
   ): Item!
   blockUser(id: ID!): User!
+  signup(signupInput: SingUpInput!): AuthResponse!
 }
 
 input CreateItemInput {
@@ -48,4 +54,10 @@ input UpdateItemInput {
   quantity: Float
   quantityUnits: String
   id: ID!
+}
+
+input SingUpInput {
+  email: String!
+  fullName: String!
+  password: String!
 }
