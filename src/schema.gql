@@ -9,12 +9,22 @@ type Item {
   quantityUnits: String
 }
 
+type User {
+  id: ID!
+  fullName: String!
+  email: String!
+  roles: [String!]!
+  isActive: Boolean!
+}
+
 type Query {
   items: [Item!]!
   item(
     """Identificador del item."""
     id: ID!
   ): Item!
+  users: [User!]!
+  user(id: ID!): User!
 }
 
 type Mutation {
@@ -24,6 +34,7 @@ type Mutation {
     """Identificador del item."""
     id: ID!
   ): Item!
+  blockUser(id: ID!): User!
 }
 
 input CreateItemInput {
