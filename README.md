@@ -1,4 +1,4 @@
-# Anylist - GraphQL + Postgres
+# Anylist - Autenticación y Autorización
 
 Se continua con el `Backend` de Items, ahora con la parte de Autenticación y Autorización, los temas que se ven son: 
 
