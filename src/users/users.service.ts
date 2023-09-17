@@ -1,4 +1,5 @@
 import { Injectable, BadRequestException, InternalServerErrorException, Logger } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -16,7 +17,10 @@ export class UsersService {
 
   async create( singupInput: SingUpInput ): Promise<User> {
     try { 
-      const newUser = this.usersRepository.create( singupInput );
+      const newUser = this.usersRepository.create({
+        ...singupInput,
+        password: bcrypt.hashSync( singupInput.password, 10 )
+      });
 
       return await this.usersRepository.save( newUser );
     } catch (error) {
