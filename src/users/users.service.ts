@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException, InternalServerErrorException, Logger } from '@nestjs/common';
+import { Injectable, BadRequestException, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -32,8 +32,16 @@ export class UsersService {
     return [];
   }
 
-  findOne( id: string ): Promise<User> {
-    throw new Error('findOneMethod no implementado');
+  async findOneByEmail( email: string ): Promise<User> {
+    try {
+      return await this.usersRepository.findOneByOrFail({ email })
+    } catch (error) {
+      throw new NotFoundException(`${ email } no fue encontrado.`);
+      // this.handleDBErrors({
+      //   code: 'error-001',
+      //   detail: `${ email } no encontrado`
+      // });
+    }
   }
 
   update(id: number, updateUserInput: UpdateUserInput) {
@@ -47,6 +55,10 @@ export class UsersService {
   private handleDBErrors( error: any ): never {
     if( error.code === '23505' ) {
       throw new BadRequestException( error.detail.replace('Key', '') );
+    }
+
+    if( error.code === 'error-001' ) {
+      throw new BadRequestException( error.detail );
     }
 
     this.logger.error( error );

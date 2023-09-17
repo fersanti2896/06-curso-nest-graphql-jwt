@@ -19,7 +19,8 @@ import { AuthModule } from './auth/auth.module';
       autoSchemaFile: join( process.cwd(), 'src/schema.gql'),
       plugins: [
         ApolloServerPluginLandingPageLocalDefault()
-      ]
+      ], 
+      includeStacktraceInErrorResponses: false
     }), 
     TypeOrmModule.forRoot({
       type: 'postgres',
