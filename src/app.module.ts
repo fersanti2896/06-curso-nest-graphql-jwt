@@ -20,7 +20,7 @@ import { AuthModule } from './auth/auth.module';
       plugins: [
         ApolloServerPluginLandingPageLocalDefault()
       ], 
-      includeStacktraceInErrorResponses: false
+      includeStacktraceInErrorResponses: false // Activar en producción
     }), 
     TypeOrmModule.forRoot({
       type: 'postgres',
