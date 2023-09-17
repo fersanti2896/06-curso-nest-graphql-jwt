@@ -1,4 +1,5 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcrypt';
 import { AuthResponse } from './types/auth-response.type';
 import { UsersService } from '../users/users.service';
@@ -7,16 +8,21 @@ import { LoginInput, SingUpInput } from './dto/inputs';
 @Injectable()
 export class AuthService {
     constructor(
-        private readonly usersService: UsersService
+        private readonly usersService: UsersService,
+        private readonly jwtService: JwtService
     ) {}
+
+    private getJwtToken( userId: string ) {
+        return this.jwtService.sign({ id: userId });
+    }
 
     /* Creación del usuario */
     async signup( singupInput: SingUpInput ): Promise<AuthResponse> {
         // TODO: Crear Usuario
         const user = await this.usersService.create( singupInput );
 
-        // TODO: Crear JWT
-        const token = 'abc123';
+        /* Creando el JWT y guardando el id en el JWT */
+        const token = this.getJwtToken( user.id );
         
         return { token, user };
     }
@@ -29,8 +35,8 @@ export class AuthService {
             throw new BadRequestException('Credenciales no válidas.');
         }
 
-        // TODO: Crear JWT
-        const token = 'abc123';
+        /* Creando el JWT y guardando el id en el JWT */
+        const token = this.getJwtToken( user.id );
 
         return { token, user };
     }
