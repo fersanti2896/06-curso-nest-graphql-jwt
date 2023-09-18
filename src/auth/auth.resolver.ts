@@ -4,6 +4,8 @@ import { AuthService } from './auth.service';
 import { AuthResponse } from './types/auth-response.type';
 import { LoginInput, SingUpInput } from './dto/inputs';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { CurrentUser } from './decorators/current-user.decorators';
+import { User } from '../users/entities/user.entity';
 
 @Resolver()
 export class AuthResolver {
@@ -21,8 +23,9 @@ export class AuthResolver {
 
   @Query( () => AuthResponse, { name: 'revalidate' } )
   @UseGuards( JwtAuthGuard )
-  revalidateToken(): AuthResponse {
+  revalidateToken( @CurrentUser() user: User ): AuthResponse {
     // return this.authService.revalidateToken(  );
-    throw new Error('No implementado')
+    console.log('revalidae token, user', user)
+    throw new Error('no implemented')
   }
 }
