@@ -8,7 +8,7 @@ import { CurrentUser } from './decorators/current-user.decorators';
 import { User } from '../users/entities/user.entity';
 import { ValidRoles } from './enums/valid-roles.enum';
 
-@Resolver()
+@Resolver( () => AuthResponse )
 export class AuthResolver {
   constructor( private readonly authService: AuthService ) {}
 
